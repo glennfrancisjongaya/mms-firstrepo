@@ -277,7 +277,7 @@
                       <td>
                         <form action='edit.php' method='GET'>
                           <input type='hidden' name='Medid' value='<?php echo $row->MedicineID; ?>'>
-                          <button type='submit' name='edit' class='btn btn-success'>EDIT</button>                          
+                          <button type='submit' name='edit' class='btn btn-primary'>EDIT</button>                          
                         </form>
                       </td>
                     </tr>
