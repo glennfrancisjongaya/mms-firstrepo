@@ -1,11 +1,26 @@
 <?php
-	include 'connection/connection.php';
-	session_start();
-	if(!isset($_SESSION['login'])){
-  		header("location:index.php");
-   		die;
-	}
+    include 'connection/connection.php';
+    session_start();
+    if(!isset($_SESSION['login'])){
+        header("location:index.php");
+        die;
+    }
+
+    // Initialize the result variable
+    $result = null;
+
+    if (isset($_GET['submit'])) {
+        $search = $_GET['search'];
+        // Escape the search query to prevent SQL injection
+        $search = $conn->real_escape_string($search);
+        $query = "SELECT * FROM tbl_patient WHERE Lname LIKE '%$search%' OR Fname LIKE '%$search%' OR PatientID LIKE '%$search%' OR MedicalCondition LIKE '%$search%'";
+        $result = $conn->query($query);
+    } else {
+        $result = $conn->query("SELECT * FROM tbl_patient");
+    }
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -241,15 +256,15 @@
 $result = $conn->query("SELECT * FROM tbl_patient");
 ?>
 
-  <div class="row g-3">
-    <div class="col-mb-3">
-      <form action="editpatient.php" method="GET" class="mb-3">
-        <div class="input-group">
-          <input type="text" name="search" class="form-control" placeholder="Search">
-          <div class="input-group-append">
+<form action="editpatient.php" method="GET" class="mb-3">
+    <div class="input-group">
+        <input type="text" name="search" class="form-control" placeholder="Search">
+        <div class="input-group-append">
             <button type="submit" name="submit" class="btn btn-success">Search</button>
-          </div>
         </div>
+    </div>
+</form>
+
       </form>
     
       <div class="card">
